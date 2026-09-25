@@ -2102,3 +2102,269 @@ footer {
 .timer-settings .settings-content {
   padding: 8px 0;
 }
+
+.room-dialog {
+  width: min(880px, calc(100vw - 28px));
+  max-width: 880px;
+}
+.room-palettes {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.room-palettes button,
+.room-move-buttons button {
+  border: 1px solid #b889a560;
+  border-radius: 9px;
+  background: transparent;
+  color: inherit;
+  padding: 10px 12px;
+  min-height: 44px;
+}
+.room-palettes button[aria-pressed="true"] {
+  background: #cb5a8926;
+  border-color: #cb5a89;
+}
+.buildable-room {
+  position: relative;
+  aspect-ratio: 8 / 5;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid #a9777855;
+  isolation: isolate;
+}
+.room-structure {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.room-wall {
+  fill: #f4d6d3;
+}
+.room-floor {
+  fill: #cea784;
+}
+.palette-sage .room-wall {
+  fill: #c7d5bb;
+}
+.palette-sage .room-floor {
+  fill: #b99d7c;
+}
+.palette-night .room-wall {
+  fill: #4b415b;
+}
+.palette-night .room-floor {
+  fill: #816777;
+}
+.resident-mochi {
+  position: absolute;
+  left: 76%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.placed-object {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: transparent;
+  padding: 3px;
+  width: clamp(44px, 8vw, 72px);
+  height: clamp(44px, 8vw, 72px);
+  font-size: clamp(30px, 5vw, 53px);
+  line-height: 1;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  filter: drop-shadow(0 4px 2px #31212825);
+}
+.placed-object:active {
+  cursor: grabbing;
+}
+.object-selected {
+  border: 2px dashed #a73770;
+  background: #fff5;
+  z-index: 2;
+}
+.room-edit-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 14px 0 20px;
+}
+.room-edit-toolbar strong {
+  font-size: 13px;
+}
+.room-move-buttons {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.room-move-buttons button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.room-builder h3 {
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+.room-empty-note {
+  font-size: 13px;
+  line-height: 1.6;
+  margin-top: 16px;
+}
+@media (max-width: 560px) {
+  .room-dialog {
+    padding: 18px;
+  }
+  .resident-mochi .mascot {
+    width: 42px;
+    height: 42px;
+  }
+  .room-move-buttons button {
+    padding: 10px;
+  }
+}
+
+/* Light and perspective for the editable room. */
+.buildable-room {
+  box-shadow:
+    inset 0 0 35px #35213722,
+    0 12px 28px #39213516;
+}
+.resident-mochi {
+  left: 80%;
+  top: 57%;
+  filter: drop-shadow(3px 5px 3px #34203540);
+}
+.placed-object {
+  filter: drop-shadow(5px 9px 4px #34203550);
+}
+.placed-object:active {
+  filter: drop-shadow(8px 14px 6px #34203555);
+}
+
+.timer-settings-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid #cb5a8960;
+  border-radius: 10px;
+  background: #cb5a8914;
+  color: inherit;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.timer-settings-toggle:hover {
+  background: #cb5a892b;
+}
+.timer-settings-toggle .chevron-open {
+  transform: rotate(180deg);
+}
+.timer-settings .settings-content[hidden] {
+  display: none;
+}
+
+/* Keep every timer mode visible, including Stopwatch as the fourth choice. */
+.mode-tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.mode-tabs button { min-width: 0; width: 100%; min-height: 44px; padding: 8px 3px; white-space: normal; line-height: 1.35; }
+@media (max-width: 560px) {
+  .mode-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mode-tabs button:last-child { grid-column: 1 / -1; }
+}
+
+/* Two usable columns on tablets and landscape phones; stack narrow phones. */
+@media (min-width: 720px) {
+  .workspace { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+  .left-column { grid-column: 1; grid-row: 1; min-width: 0; }
+  .right-column { display: block; grid-column: 2; grid-row: 1; min-width: 0; }
+  .stats-panel { grid-column: 1 / -1; grid-row: 2; }
+}
+@media (min-width: 720px) and (max-width: 1050px) {
+  main { width: calc(100% - 32px); }
+  .workspace { gap: 12px; }
+  .timer-panel { padding: 16px 12px 0; }
+  .timer-panel .section-heading h2 { font-size: 14px; }
+  .timer-digits { font-size: 64px; }
+  .timer-controls { grid-template-columns: 1fr 1.5fr 1fr; gap: 5px; }
+  .timer-controls button { padding: 8px 4px; font-size: 10px; gap: 4px; flex-wrap: wrap; min-height: 44px; }
+  .timer-controls svg { width: 15px; }
+  .mochi-companion { margin-left: -12px; margin-right: -12px; padding: 10px; gap: 8px; }
+  .mochi-companion h3 { font-size: 11px; }
+  .mochi-companion p { font-size: 10px; }
+  .mode-tabs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .mode-tabs button:last-child { grid-column: 1 / -1; }
+  .music-panel { gap: 8px; }
+  .music-panel .track-info { min-width: 0; flex: 1; }
+  .music-panel .playback { flex-basis: 100%; justify-content: center; }
+  .music-volume { width: 100%; }
+}
+
+/* Shared day/night palette for all interactive surfaces. */
+:root {
+  --mochi-bg: #fff8ef;
+  --mochi-surface: #fffdf9;
+  --mochi-raised: #fbe7e6;
+  --mochi-inset: #f3e8e2;
+  --mochi-text: #392c36;
+  --mochi-muted: #725363;
+  --mochi-accent: #b52f64;
+  --mochi-on-accent: #ffffff;
+  --mochi-line: #d9b8c0;
+  color-scheme: light;
+}
+:root[data-theme="dark"] {
+  --mochi-bg: #171820;
+  --mochi-surface: #242430;
+  --mochi-raised: #373040;
+  --mochi-inset: #1c1d27;
+  --mochi-text: #fff0f5;
+  --mochi-muted: #ccb9c8;
+  --mochi-accent: #ff94bd;
+  --mochi-on-accent: #301524;
+  --mochi-line: #615065;
+  color-scheme: dark;
+}
+:root, :root[data-theme="dark"] { background: var(--mochi-bg); color: var(--mochi-text); }
+:root .panel, :root dialog, :root .station-card, :root .unlocks-grid button {
+  background: var(--mochi-surface); color: var(--mochi-text); border-color: var(--mochi-line);
+}
+:root .topbar, :root .stats-grid, :root .stats-grid > div, :root .timer-settings { border-color: var(--mochi-line); }
+:root .brand, :root .timer-digits, :root .brand-light, :root .small-flower, :root .footer-flower { color: var(--mochi-accent); }
+:root .hint, :root .goal-note, :root .goal-line small, :root .stats-grid span,
+:root .stats-grid strong small, :root .mochi-companion p, :root .track-info p,
+:root .music-notice, :root .welcome p, :root .modal-description, :root .station-card small,
+:root footer, :root .timer-label, :root .timer-caption, :root .eyebrow,
+:root .room-unlock p, :root .unlock-progress > span, :root .brand small,
+:root .daily-note, :root .daily-note small, :root .room-empty-note { color: var(--mochi-muted); }
+:root .mode-tabs, :root .progress-track { background: var(--mochi-inset); }
+:root .mode-tabs button, :root nav button, :root .icon-button { color: var(--mochi-muted); }
+:root .mode-tabs button.active, :root nav button.active, :root .streak-pill,
+:root .theme-toggle, :root .music-play, :root .enabled, :root .focus-badge {
+  background: var(--mochi-raised); color: var(--mochi-accent) !important;
+}
+:root .primary-control { background: var(--mochi-accent); border-color: var(--mochi-accent); color: var(--mochi-on-accent); }
+:root .station-control, :root .secondary-control, :root .timer-settings-toggle,
+:root .room-palettes button, :root .room-move-buttons button {
+  background: var(--mochi-raised); border-color: var(--mochi-line); color: var(--mochi-text);
+}
+:root .mochi-companion, :root .room-unlock, :root .settings-note, :root .journey-summary > div {
+  background: var(--mochi-raised); border-color: var(--mochi-line); color: var(--mochi-text);
+}
+:root .room-unlock h3, :root .room-unlock > button, :root .text-button { color: var(--mochi-accent); }
+:root .station-card.selected, :root .unlocks-grid .selected, :root .room-palettes button[aria-pressed="true"] {
+  background: var(--mochi-raised); border-color: var(--mochi-accent); color: var(--mochi-text);
+}
+:root .progress-track > div, :root .session-dots .filled { background: var(--mochi-accent); }
+:root input[type="range"], :root input[type="checkbox"] { accent-color: var(--mochi-accent); }
+:root .custom-duration input { background: var(--mochi-inset); border-color: var(--mochi-line); color: var(--mochi-text); }
+:root button:focus-visible, :root input:focus-visible { outline: 2px solid var(--mochi-accent); outline-offset: 3px; }

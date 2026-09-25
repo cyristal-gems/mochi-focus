@@ -2,10 +2,12 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { X } from "lucide-react";
 export default function Modal({
   title,
+  wide = false,
   children,
   close,
 }: {
   title: string;
+  wide?: boolean;
   children: ReactNode;
   close: () => void;
 }) {
@@ -16,6 +18,7 @@ export default function Modal({
   return (
     <dialog
       ref={ref}
+      className={wide ? "room-dialog" : undefined}
       onCancel={close}
       onClick={(e) => {
         if (e.target === ref.current) close();

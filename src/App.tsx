@@ -19,8 +19,6 @@ import {
   Flame,
   Clock,
   Check,
-  Lock,
-  Sparkles,
   Heart,
   Music2,
   ChartNoAxesColumnIncreasing,
@@ -35,29 +33,36 @@ import { useStudyStats } from "./hooks/useStudyStats";
 import { useStored } from "./utils/storage";
 import { duration } from "./utils/stats";
 import { prepareChime, playChime } from "./utils/chime";
+import RoomBuilder from "./components/RoomBuilder";
 import Mascot from "./components/Mascot";
 import Modal from "./components/Modal";
 const unlocks = [
+  { hours: 0.25, name: "Tea time", icon: "🍵" },
+  { hours: 0.5, name: "Cozy candle", icon: "🕯️" },
   { hours: 1, name: "Little plant", icon: "🌱" },
+  { hours: 2, name: "Cherry blossom vase", icon: "💐" },
+  { hours: 3, name: "Headphone stand", icon: "🎧" },
   { hours: 5, name: "Desk lamp", icon: "🪔" },
+  { hours: 7, name: "Tiny cactus", icon: "🌵" },
   { hours: 10, name: "Book collection", icon: "📚" },
+  { hours: 12, name: "Moon lamp", icon: "🌙" },
+  { hours: 15, name: "Strawberry cushion", icon: "🍓" },
   { hours: 20, name: "Cuddle buddy", icon: "🧸" },
+  { hours: 25, name: "Music corner", icon: "📻" },
   { hours: 30, name: "Art print", icon: "🖼️" },
+  { hours: 40, name: "Bonsai tree", icon: "🪴" },
   { hours: 50, name: "Sakura plant", icon: "🌸" },
+  { hours: 65, name: "Crystal keepsake", icon: "🔮" },
+  { hours: 80, name: "Star ornament", icon: "🌟" },
   { hours: 100, name: "Golden Neko", icon: "🐱" },
 ];
 export default function App() {
-  const [theme, setTheme] = useStored<"light" | "dark">(
-    "mochi-theme",
-    window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light",
-  );
+  const [theme, setTheme] = useStored<"light" | "dark">("mochi-theme", "dark");
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", theme === "dark" ? "#262431" : "#f7f6ef");
+      ?.setAttribute("content", theme === "dark" ? "#171820" : "#fff8ef");
   }, [theme]);
   const [stationId, setStationId] = useStored("mochi-current-station", "tokyo");
   const station = stations.find((s) => s.id === stationId) || stations[0];
@@ -72,12 +77,13 @@ export default function App() {
       "mochi-decorations",
       [],
     );
-  const settingsRef = useRef<HTMLDetailsElement>(null);
+  const settingsRef = useRef<HTMLDivElement>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   function openSettings() {
     if (!settingsRef.current) return;
-    settingsRef.current.open = true;
+    setSettingsOpen(true);
     settingsRef.current.scrollIntoView({ block: "nearest" });
-    settingsRef.current.querySelector("summary")?.focus();
+    settingsRef.current.querySelector("button")?.focus();
   }
   const [modal, setModal] = useState<"stations" | "history" | "room" | null>(
       null,
@@ -333,30 +339,17 @@ export default function App() {
                 </span>
               </div>
               <div className="mode-tabs">
-                {modes.slice(0, 3).map((m) => (
+                {modes.map((m) => (
                   <button
                     key={m.id}
                     className={timer.mode === m.id ? "active" : ""}
+                    aria-pressed={timer.mode === m.id}
                     onClick={() => timer.select(m.id)}
                   >
                     {m.name}
                   </button>
                 ))}
-                <select
-                  aria-label="More timer modes"
-                  value={
-                    ["custom", "stopwatch"].includes(timer.mode)
-                      ? timer.mode
-                      : ""
-                  }
-                  onChange={(e) =>
-                    e.target.value && timer.select(e.target.value)
-                  }
-                >
-                  <option value="">•••</option>
-                  <option value="stopwatch">Stopwatch</option>
-                  <option value="custom">Custom</option>
-                </select>
+
               </div>
               {timer.mode === "custom" && (
                 <label className="custom-duration">
@@ -444,11 +437,24 @@ export default function App() {
                   Finish session
                 </button>
               )}
-              <details className="timer-settings" ref={settingsRef}>
-                <summary>
+              <div className="timer-settings" ref={settingsRef}>
+                <button
+                  className="timer-settings-toggle"
+                  aria-expanded={settingsOpen}
+                  aria-controls="timer-settings-content"
+                  onClick={() => setSettingsOpen(!settingsOpen)}
+                >
                   <Settings2 size={15} /> Timer settings
-                </summary>
-                <div className="settings-content">
+                  <ChevronDown
+                    size={16}
+                    className={settingsOpen ? "chevron-open" : ""}
+                  />
+                </button>
+                <div
+                  className="settings-content"
+                  id="timer-settings-content"
+                  hidden={!settingsOpen}
+                >
                   <p className="modal-description">
                     Little adjustments for your kind of day.
                   </p>
@@ -507,7 +513,7 @@ export default function App() {
                     </p>
                   )}
                 </div>
-              </details>
+              </div>
               <div className="mochi-companion">
                 <Mascot state={state} />
                 <div>
@@ -600,14 +606,14 @@ export default function App() {
             <h3>A little focus makes your room grow.</h3>
             <p>
               {nextUnlock
-                ? `Your next little joy: ${nextUnlock.name.toLowerCase()} · unlocks at ${nextUnlock.hours} ${nextUnlock.hours === 1 ? "hour" : "hours"} of focus`
+                ? `Your next little joy: ${nextUnlock.name.toLowerCase()} · unlocks at ${duration(nextUnlock.hours * 3600)} of focus`
                 : "Your cozy collection is complete. Keep growing."}
             </p>
           </div>
           <div className="unlock-progress">
             <span>
               {duration(stats.total)} /{" "}
-              {nextUnlock ? `${nextUnlock.hours}h` : "Complete"}
+              {nextUnlock ? duration(nextUnlock.hours * 3600) : "Complete"}
             </span>
             <div className="progress-track">
               <div
@@ -639,6 +645,7 @@ export default function App() {
       </main>
       {modal && (
         <Modal
+          wide={modal === "room"}
           title={
             modal === "stations"
               ? "Find your frequency"
@@ -729,53 +736,12 @@ export default function App() {
             </>
           )}
           {modal === "room" && (
-            <>
-              <p className="modal-description">
-                Earn a little something just by showing up. Select unlocked
-                objects to put them in your room.
-              </p>
-              <div className="unlocks-grid">
-                {unlocks.map((u) => {
-                  const available = stats.total >= u.hours * 3600,
-                    selected = decorations.includes(u.name);
-                  return (
-                    <button
-                      key={u.name}
-                      disabled={!available}
-                      aria-pressed={selected}
-                      onClick={() =>
-                        setDecorations(
-                          selected
-                            ? decorations.filter((n) => n !== u.name)
-                            : [...decorations, u.name],
-                        )
-                      }
-                      className={selected ? "selected" : ""}
-                    >
-                      <span>{u.icon}</span>
-                      <strong>{u.name}</strong>
-                      <small>
-                        {available ? (
-                          selected ? (
-                            <>
-                              <Check size={12} /> In your room
-                            </>
-                          ) : (
-                            <>
-                              <Sparkles size={12} /> Place in room
-                            </>
-                          )
-                        ) : (
-                          <>
-                            <Lock size={12} /> {u.hours}h of focus
-                          </>
-                        )}
-                      </small>
-                    </button>
-                  );
-                })}
-              </div>
-            </>
+            <RoomBuilder
+              items={unlocks}
+              total={stats.total}
+              placed={decorations}
+              setPlaced={setDecorations}
+            />
           )}
         </Modal>
       )}

@@ -1,12 +1,7 @@
-# 🌸 Mochi Focus
+## Mochi Focus
+Mochi Focus is a kawaii lofi study timer that turns focus time into a cozy daily ritual. Study alongside Mochi the tuxedo cat, discover relaxing music, and watch your room grow as you build your study habits. The app runs entirely in your browser, with no backend or account required. Your study progress and preferences are saved on your device.
 
-## Summary
-
-Mochi Focus is a kawaii lofi study timer that turns focus time into a cozy daily ritual. Study alongside Mochi the tuxedo cat, discover relaxing music, and watch your room grow as you build your study habits.
-
-The app runs entirely in your browser, with no backend or account required. Your study progress and preferences are saved on your device.
-
-## Key Features
+## 💫 Key Features
 
 - **Flexible focus timers:** Choose Pomodoro (25/5), Deep Focus (45/10), Long Study (60/10), a custom countdown, or a stopwatch. Pause, restart, and take breaks at your own pace.
 - **Six music stations:** Explore Tokyo Café, Rainy Window, Sakura Beats, Midnight Study, Library Neko, and Night Train. Each has its own icon, description, and nine selected Jamendo tracks explicitly labeled lofi; each room has original artwork featuring Mochi and cherry blossoms.
@@ -14,12 +9,11 @@ The app runs entirely in your browser, with no backend or account required. Your
 - **Completion chime:** An optional gentle tone marks the end of focus and break timers or a finished stopwatch session. Preview it in Settings and save your preference.
 - **Mochi the study cat:** Your tuxedo cat companion wears a cherry blossom and reacts to studying, breaks, session completion, and inactivity.
 - **Study tracking:** Track daily focus, total study time, completed sessions, daily goals, current and longest streaks, and recent daily history.
-- **Room progression:** Unlock seven cosmetic objects through study milestones, then choose which unlocked items to display.
-- **Kawaii light and dark modes:** Enjoy warm cream and strawberry accents by day, or deep plum and soft pink by night. Your theme preference is saved.
+- **Room progression:** Build your own furnished room with three color palettes. Unlock 18 decorations through study milestones, drag them into place or use keyboard controls, and save your arrangement on your device.
+- **Kawaii light and dark modes:** Enjoy warm cream and strawberry accents by day, or deep plum and soft pink by night. Dark mode is the default, and your theme preference is saved.
 - **Responsive design:** Flexible phone, tablet, and desktop layouts with touch-friendly controls, keyboard navigation, and reduced-motion support.
-- **Local persistence:** Keep progress and preferences between visits on the same browser. No cloud syncing or account setup is needed.
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - **React:** Builds the interactive interface from reusable components. Custom hooks separate timer behavior, audio playback, and study tracking.
 - **TypeScript:** Adds type checking to components, state, and the music-provider interface. It helps catch errors during development and keeps the code easier to maintain.
@@ -32,11 +26,9 @@ The app runs entirely in your browser, with no backend or account required. Your
 - **Git and GitHub:** Git tracks source changes locally, and the project includes a GitHub Actions workflow for GitHub Pages deployment. The repository can also be connected to Vercel.
 - **Vitest and React Testing Library:** Test timer behavior and study-statistics calculations. Checks cover pause/resume, completion, breaks, stopwatch sessions, background timing, and streaks.
 
-For local setup and deployment instructions, see [SETUP.md](SETUP.md). Music and asset attribution is documented in [CREDITS.md](CREDITS.md).
+## 🌸 View Mochi Focus Here
 
-## View Mochi Focus Here
-
-[mochi-focus.vercel.app](https://mochi-focus.vercel.app)
+[Mochi Focus](https://mochi-focus.vercel.app)
 
 ## Contact
 

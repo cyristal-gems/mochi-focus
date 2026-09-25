@@ -16,10 +16,25 @@ export function useMusic(
     [shuffle, setShuffle] = useStored("mochi-shuffle", false),
     [muted, setMuted] = useState(false);
   const sound = useRef<Howl | null>(null),
-    wantPlay = useRef(false),
+    wantPlay = useRef(true),
+    blocked = useRef(false),
     shuffleRef = useRef(shuffle);
   shuffleRef.current = shuffle;
   const [retry, setRetry] = useState(0);
+  useEffect(() => {
+    const resume = (event: Event) => {
+      if ((event.target as Element)?.closest?.(".playback")) return;
+      if (!blocked.current || !wantPlay.current || !sound.current) return;
+      blocked.current = false;
+      sound.current.play();
+    };
+    document.addEventListener("click", resume);
+    document.addEventListener("keydown", resume);
+    return () => {
+      document.removeEventListener("click", resume);
+      document.removeEventListener("keydown", resume);
+    };
+  }, []);
   useEffect(() => {
     const controller = new AbortController();
     sound.current?.unload();
@@ -66,7 +81,11 @@ export function useMusic(
       format: ["mp3"],
       html5: true,
       volume: volume / 100,
-      onplay: () => setPlaying(true),
+      onplay: () => {
+        blocked.current = false;
+        setError("");
+        setPlaying(true);
+      },
       onpause: () => setPlaying(false),
       onend: () => {
         if (tracks.length === 1) h.play();
@@ -77,7 +96,8 @@ export function useMusic(
         setPlaying(false);
       },
       onplayerror: () => {
-        setError("Playback was blocked. Press play to try again.");
+        blocked.current = true;
+        setError("Tap anywhere or press Play to start the music.");
         setPlaying(false);
       },
     });
