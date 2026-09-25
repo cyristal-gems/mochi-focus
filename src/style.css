@@ -1865,21 +1865,3 @@ footer {
     margin-left: auto;
   }
 }
-.offline-status {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 10px 14px;
-  margin-bottom: 22px;
-  border: 1px solid #ebccda;
-  border-radius: 10px;
-  background: #fff0f5;
-  color: #925674;
-  font-size: 11px;
-  line-height: 1.6;
-}
-[data-theme="dark"] .offline-status {
-  background: #3c2936;
-  border-color: #70465e;
-  color: #e6b5cf;
-}

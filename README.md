@@ -19,8 +19,6 @@ The app runs entirely in your browser, with no backend or account required. Your
 - **Responsive design:** Flexible phone, tablet, and desktop layouts with touch-friendly controls, keyboard navigation, and reduced-motion support.
 - **Local persistence:** Keep progress and preferences between visits on the same browser. No cloud syncing or account setup is needed.
 
-- **Offline focus:** After an online visit finishes saving the app, reopen it offline to use timers, study tracking, room artwork, and local ambience. Jamendo music still requires internet.
-
 ## Tech Stack
 
 - **React:** Builds the interactive interface from reusable components. Custom hooks separate timer behavior, audio playback, and study tracking.

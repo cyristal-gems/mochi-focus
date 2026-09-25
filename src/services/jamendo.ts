@@ -3,10 +3,6 @@ export const hasClientId = Boolean(import.meta.env.VITE_JAMENDO_CLIENT_ID);
 const cache = new Map<string, Track[]>();
 export const jamendoProvider: MusicProvider = {
   async getTracks(station, signal) {
-    if (!navigator.onLine)
-      throw new Error(
-        "You’re offline. Jamendo music needs internet; your timer and local ambience still work.",
-      );
     if (!hasClientId)
       throw new Error(
         "Add your Jamendo Client ID to .env to connect music. Your timer and ambience are ready to use.",
