@@ -10,7 +10,7 @@ cp .env.example .env
 npm run dev
 ```
 
-The focus timer, tracking, room progression, work immediately. For music, register your own application at https://devportal.jamendo.com/ and add its read API Client ID:
+The focus timer, tracking, and room progression work immediately. For music, register your own application at https://devportal.jamendo.com/ and add its read API Client ID:
 
 ```env
 VITE_JAMENDO_CLIENT_ID=your_client_id_here
@@ -58,7 +58,7 @@ Push this folder as a GitHub repository, import it into Vercel, and use the Vite
 
 ## Deploy to GitHub Pages
 
-The included Actions workflow builds and deploys to Pages on pushes to `main` or manual dispatch. In GitHub: Settings → Pages → Source → GitHub Actions. Add a repository Actions variable named `VITE_JAMENDO_CLIENT_ID`. Relative Vite asset paths support repository subpaths. Do not add `.env` to Git.
+The included Actions workflow builds and deploys to Pages only when manually dispatched. In GitHub: Settings → Pages → Source → GitHub Actions. Add a repository Actions variable named `VITE_JAMENDO_CLIENT_ID`. Relative Vite asset paths support repository subpaths. Do not add `.env` to Git.
 
 ```sh
 git remote add origin https://github.com/YOUR_USERNAME/mochi-focus.git

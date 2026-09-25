@@ -35,7 +35,7 @@ For local setup and deployment instructions, see [SETUP.md](SETUP.md). Music and
 
 ## View Mochi Focus Here
 
-<!-- Add the live Vercel or GitHub Pages link here once hosting is selected. -->
+[mochi-focus.vercel.app](https://mochi-focus.vercel.app)
 
 ## Contact
 
