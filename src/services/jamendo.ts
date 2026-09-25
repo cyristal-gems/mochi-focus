@@ -11,11 +11,10 @@ export const jamendoProvider: MusicProvider = {
     const params = new URLSearchParams({
       client_id: import.meta.env.VITE_JAMENDO_CLIENT_ID,
       format: "json",
-      limit: "30",
-      tags: station.tags,
+      limit: String(station.trackIds.length),
+      id: station.trackIds.join("+"),
       audioformat: "mp32",
       include: "licenses",
-      order: "popularity_total",
     });
     const response = await fetch(
       `https://api.jamendo.com/v3.0/tracks/?${params}`,
@@ -32,8 +31,15 @@ export const jamendoProvider: MusicProvider = {
       throw new Error(
         body.headers?.error_message || "Unable to load this station.",
       );
-    const tracks = (body.results as Track[])
-      .filter((t) => /^https?:\/\//.test(t.audio || ""))
+    const results = Array.isArray(body.results)
+      ? (body.results as Track[])
+      : [];
+    const tracks = results
+      .filter(
+        (t) =>
+          station.trackIds.includes(String(t.id)) &&
+          /^https?:\/\//.test(t.audio || ""),
+      )
       .map((t) => ({
         ...t,
         audio: t.audio.replace(/^http:/, "https:"),
@@ -41,8 +47,13 @@ export const jamendoProvider: MusicProvider = {
       }));
     if (!tracks.length)
       throw new Error(
-        "No tracks found for this station. Try another cozy corner.",
+        "This lofi collection is temporarily unavailable. Please try another station.",
       );
+    tracks.sort(
+      (a, b) =>
+        station.trackIds.indexOf(String(a.id)) -
+        station.trackIds.indexOf(String(b.id)),
+    );
     cache.set(station.id, tracks);
     return tracks;
   },

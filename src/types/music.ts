@@ -12,7 +12,7 @@ export interface Station {
   name: string;
   icon: string;
   description: string;
-  tags: string;
+  trackIds: string[];
   color: string;
 }
 export interface MusicProvider {

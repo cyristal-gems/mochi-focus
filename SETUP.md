@@ -23,7 +23,7 @@ Restart Vite after editing `.env`. Vite exposes this ID in the browser bundle; i
 - Pomodoro 25/5, deep focus 45/10, long study 60/10, custom 1–240 minutes, and count-up timer.
 - Pause, restart, explicit continue into breaks, and finish-session for stopwatch. Breaks do not count as focus. Changing mode/restarting preserves focus already earned but does not count an unfinished session as completed.
 - Wall-clock timer catches up after background tab throttling. Active sessions stop on reload; credited time is retained. Time accrued across midnight while a tab is suspended is attributed to the day it resumes.
-- Six Jamendo search-based stations with play/pause, next/previous, shuffle, mute, volume, automatic next, artist links, and license links. Music and timer operate independently. Station palettes share one original room illustration.
+- Six Jamendo lofi track collections with play/pause, next/previous, shuffle, mute, volume, automatic next, artist links, and license links. Music and timer operate independently. Station palettes share one original room illustration.
 - Five locally hosted original synthesized ambient textures with independent volume. These are stylized soundscapes, not field recordings; select the active sound again to turn it off.
 - Local daily focus, goal, completed sessions, total time, current/longest streak, and recent history. A day with at least one credited second extends a streak.
 - Animated Mochi and seven cosmetic milestones. Unlocked objects can be placed in the room.
@@ -39,7 +39,7 @@ Your browser's local storage is the source of truth. Different browsers/devices 
 - `src/hooks/useMusic.ts`: Howler lifecycle, track navigation and playback.
 - `src/types/music.ts`: replaceable MusicProvider interface.
 - `src/services/jamendo.ts`: read API requests, validation, cancellation, and in-memory station cache.
-- `src/data/stations.ts`: station metadata and search criteria.
+- `src/data/stations.ts`: station metadata and verified lofi track IDs.
 - `src/components/`: mascot, ambience, modal.
 - `public/ambience/`, `public/backgrounds/`: local media.
 
