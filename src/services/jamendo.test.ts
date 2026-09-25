@@ -6,11 +6,14 @@ afterEach(() => {
   vi.resetModules();
 });
 describe("Jamendo-only lofi collections", () => {
-  it("assigns five distinct tracks to each of six stations", () => {
+  it("assigns nine distinct tracks to each of six stations", () => {
     expect(stations).toHaveLength(6);
+    expect(stations.every((station) => station.trackIds.length === 9)).toBe(
+      true,
+    );
     const ids = stations.flatMap((s) => s.trackIds);
-    expect(ids).toHaveLength(30);
-    expect(new Set(ids).size).toBe(30);
+    expect(ids).toHaveLength(54);
+    expect(new Set(ids).size).toBe(54);
     expect(ids.every((id) => /^\d+$/.test(id))).toBe(true);
   });
   it("requests exact IDs, filters unlisted tracks, and preserves station order", async () => {
@@ -23,15 +26,13 @@ describe("Jamendo-only lofi collections", () => {
       audio: "http://example.com/audio.mp3",
       license_ccurl: "http://creativecommons.org/licenses/by/3.0/",
     });
-    const fetch = vi
-      .fn()
-      .mockResolvedValue({
-        ok: true,
-        json: async () => ({
-          headers: { status: "success" },
-          results: [track(ids[1]), track("unlisted"), track(ids[0])],
-        }),
-      });
+    const fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        headers: { status: "success" },
+        results: [track(ids[1]), track("unlisted"), track(ids[0])],
+      }),
+    });
     vi.stubGlobal("fetch", fetch);
     const { jamendoProvider } = await import("./jamendo");
     const result = await jamendoProvider.getTracks(station);
@@ -46,12 +47,10 @@ describe("Jamendo-only lofi collections", () => {
   });
   it("reports an empty collection without falling back to generic music", async () => {
     vi.stubEnv("VITE_JAMENDO_CLIENT_ID", "test-client");
-    const fetch = vi
-      .fn()
-      .mockResolvedValue({
-        ok: true,
-        json: async () => ({ headers: { status: "success" }, results: [] }),
-      });
+    const fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ headers: { status: "success" }, results: [] }),
+    });
     vi.stubGlobal("fetch", fetch);
     const { jamendoProvider } = await import("./jamendo");
     await expect(jamendoProvider.getTracks(stations[0])).rejects.toThrow(
@@ -63,14 +62,12 @@ describe("Jamendo-only lofi collections", () => {
     vi.stubEnv("VITE_JAMENDO_CLIENT_ID", "test-client");
     vi.stubGlobal(
       "fetch",
-      vi
-        .fn()
-        .mockResolvedValue({
-          ok: true,
-          json: async () => ({
-            headers: { status: "failed", error_message: "Invalid client" },
-          }),
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({
+          headers: { status: "failed", error_message: "Invalid client" },
         }),
+      }),
     );
     const { jamendoProvider } = await import("./jamendo");
     await expect(jamendoProvider.getTracks(stations[0])).rejects.toThrow(

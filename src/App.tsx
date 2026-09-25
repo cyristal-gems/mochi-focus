@@ -34,7 +34,6 @@ import { modes, useTimer } from "./hooks/useTimer";
 import { useStudyStats } from "./hooks/useStudyStats";
 import { useStored } from "./utils/storage";
 import { duration } from "./utils/stats";
-import AmbientMixer from "./components/AmbientMixer";
 import Mascot from "./components/Mascot";
 import Modal from "./components/Modal";
 const unlocks = [
@@ -223,9 +222,9 @@ export default function App() {
                 <span className="eyebrow">
                   {music.playing ? "NOW PLAYING" : "LOFI FOR YOUR MIND"}
                 </span>
-                <h3>{music.track?.name || "Your next favorite daydream"}</h3>
+                <h3>{music.track?.name || (music.loading ? "Loading station…" : "Music unavailable")}</h3>
                 <p>
-                  {music.track?.artist_name || "Connect Jamendo to tune in"}
+                  {music.track?.artist_name || station.name}
                   {music.track && (
                     <>
                       {" "}
@@ -308,7 +307,6 @@ export default function App() {
                 {music.error && <button onClick={music.retry}>Retry</button>}
               </div>
             )}
-            <AmbientMixer />
           </div>
           <aside className="right-column">
             <section className="panel timer-panel">
@@ -447,73 +445,73 @@ export default function App() {
                 <Heart size={15} />
               </div>
             </section>
-            <section className="panel stats-panel">
-              <div className="section-heading">
-                <h2>Today’s little wins</h2>
-                <button
-                  aria-label="View study history"
-                  className="icon-button"
-                  onClick={() => setModal("history")}
-                >
-                  <ArrowUpRight size={17} />
-                </button>
-              </div>
-              <div className="goal-line">
-                <span>
-                  {duration(stats.today)}
-                  <small> / {duration(goal * 60)}</small>
-                </span>
-                <button
-                  className="text-button"
-                  onClick={() => setModal("settings")}
-                >
-                  Daily goal
-                </button>
-              </div>
-              <div
-                className="progress-track"
-                role="progressbar"
-                aria-label="Daily focus goal"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={Math.min(
-                  100,
-                  Math.floor((stats.today / (goal * 60)) * 100),
-                )}
-              >
-                <div
-                  style={{
-                    width: `${Math.min(100, (stats.today / (goal * 60)) * 100)}%`,
-                  }}
-                />
-              </div>
-              <p className="goal-note">
-                {stats.today >= goal * 60
-                  ? "Your daily goal is complete. Beautiful work!"
-                  : "Every focused minute is a little victory."}
-              </p>
-              <div className="stats-grid">
-                <div>
-                  <Flame size={19} />
-                  <strong>
-                    {stats.streak}
-                    <small> days</small>
-                  </strong>
-                  <span>Current streak</span>
-                </div>
-                <div>
-                  <BookOpen size={19} />
-                  <strong>{stats.sessions}</strong>
-                  <span>Sessions done</span>
-                </div>
-                <div>
-                  <Clock size={19} />
-                  <strong>{duration(stats.total)}</strong>
-                  <span>Total focus</span>
-                </div>
-              </div>
-            </section>
           </aside>
+          <section className="panel stats-panel">
+            <div className="section-heading">
+              <h2>Today’s little wins</h2>
+              <button
+                aria-label="View study history"
+                className="icon-button"
+                onClick={() => setModal("history")}
+              >
+                <ArrowUpRight size={17} />
+              </button>
+            </div>
+            <div className="goal-line">
+              <span>
+                {duration(stats.today)}
+                <small> / {duration(goal * 60)}</small>
+              </span>
+              <button
+                className="text-button"
+                onClick={() => setModal("settings")}
+              >
+                Daily goal
+              </button>
+            </div>
+            <div
+              className="progress-track"
+              role="progressbar"
+              aria-label="Daily focus goal"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={Math.min(
+                100,
+                Math.floor((stats.today / (goal * 60)) * 100),
+              )}
+            >
+              <div
+                style={{
+                  width: `${Math.min(100, (stats.today / (goal * 60)) * 100)}%`,
+                }}
+              />
+            </div>
+            <p className="goal-note">
+              {stats.today >= goal * 60
+                ? "Your daily goal is complete. Beautiful work!"
+                : "Every focused minute is a little victory."}
+            </p>
+            <div className="stats-grid">
+              <div>
+                <Flame size={19} />
+                <strong>
+                  {stats.streak}
+                  <small>{stats.streak === 1 ? " day" : " days"}</small>
+                </strong>
+                <span>Current streak</span>
+              </div>
+              <div>
+                <BookOpen size={19} />
+                <strong>{stats.sessions}</strong>
+                <span>Sessions done</span>
+              </div>
+              <div>
+                <Clock size={19} />
+                <strong>{duration(stats.total)}</strong>
+                <span>Total focus</span>
+              </div>
+            </div>
+          </section>
         </div>
         <section className="room-unlock">
           <span className="plant-icon">🌱</span>
@@ -652,7 +650,7 @@ export default function App() {
                   <strong>{duration(stats.total)}</strong>Total focus
                 </div>
                 <div>
-                  <strong>{stats.longest} days</strong>Longest streak
+                  <strong>{stats.longest} {stats.longest === 1 ? "day" : "days"}</strong>Longest streak
                 </div>
                 <div>
                   <strong>{stats.sessions}</strong>Sessions

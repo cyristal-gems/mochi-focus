@@ -10,7 +10,7 @@ cp .env.example .env
 npm run dev
 ```
 
-The focus timer, tracking, room progression, and ambience work immediately. For music, register your own application at https://devportal.jamendo.com/ and add its read API Client ID:
+The focus timer, tracking, room progression, work immediately. For music, register your own application at https://devportal.jamendo.com/ and add its read API Client ID:
 
 ```env
 VITE_JAMENDO_CLIENT_ID=your_client_id_here
@@ -24,7 +24,6 @@ Restart Vite after editing `.env`. Vite exposes this ID in the browser bundle; i
 - Pause, restart, explicit continue into breaks, and finish-session for stopwatch. Breaks do not count as focus. Changing mode/restarting preserves focus already earned but does not count an unfinished session as completed.
 - Wall-clock timer catches up after background tab throttling. Active sessions stop on reload; credited time is retained. Time accrued across midnight while a tab is suspended is attributed to the day it resumes.
 - Six Jamendo lofi track collections with play/pause, next/previous, shuffle, mute, volume, automatic next, artist links, and license links. Music and timer operate independently. Station palettes share one original room illustration.
-- Five locally hosted original synthesized ambient textures with independent volume. These are stylized soundscapes, not field recordings; select the active sound again to turn it off.
 - Local daily focus, goal, completed sessions, total time, current/longest streak, and recent history. A day with at least one credited second extends a streak.
 - Animated Mochi and seven cosmetic milestones. Unlocked objects can be placed in the room.
 - Saved kawaii light/dark themes: cream and strawberry by day, deep plum and soft pink by night.
@@ -40,8 +39,8 @@ Your browser's local storage is the source of truth. Different browsers/devices 
 - `src/types/music.ts`: replaceable MusicProvider interface.
 - `src/services/jamendo.ts`: read API requests, validation, cancellation, and in-memory station cache.
 - `src/data/stations.ts`: station metadata and verified lofi track IDs.
-- `src/components/`: mascot, ambience, modal.
-- `public/ambience/`, `public/backgrounds/`: local media.
+- `src/components/`: mascot and modal.
+- `public/backgrounds/`: local media.
 
 Music is fetched once per station per page session, then reused. No polling or timer-driven API requests. Network failures show a retry action. Live Jamendo playback requires your own valid Client ID and must be verified after configuration.
 

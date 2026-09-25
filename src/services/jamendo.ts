@@ -5,7 +5,7 @@ export const jamendoProvider: MusicProvider = {
   async getTracks(station, signal) {
     if (!hasClientId)
       throw new Error(
-        "Add your Jamendo Client ID to .env to connect music. Your timer and ambience are ready to use.",
+        "Add your Jamendo Client ID to .env to connect music. Your timer is ready to use.",
       );
     if (cache.has(station.id)) return cache.get(station.id)!;
     const params = new URLSearchParams({

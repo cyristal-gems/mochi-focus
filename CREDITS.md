@@ -6,11 +6,7 @@ Music is streamed from Jamendo API v3 at runtime, not bundled. Each current trac
 
 ## Artwork
 
-`public/backgrounds/tokyo-cafe.png`: original AI-generated illustration created for Mochi Focus with OpenAI image generation, September 2026. Six station color treatments share this illustration. The animated CSS mascot is original project code.
-
-## Ambient textures
-
-`public/ambience/{rain,cafe,fire,ocean,night}.wav`: original synthesized noise/tonal soundscapes created for this project, September 2026. No sampled recordings or third-party audio. These original audio assets are provided under CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/. Café is a low, warm room-tone texture rather than recorded conversation.
+`public/backgrounds/tokyo-cafe.png`: original AI-generated illustration created for Mochi Focus with OpenAI image generation, September 2026. Six station color treatments share this illustration. The animated SVG tuxedo cat and cherry blossom mascot is original project code.
 
 ## Libraries
 
