@@ -1,76 +1,45 @@
 # 🌸 Mochi Focus
 
-A cozy, responsive study space made with React, TypeScript, Vite, Tailwind CSS, Lucide, and Howler. No backend or account required.
+## Summary
 
-## Start
+Mochi Focus is a kawaii lofi study timer that turns focus time into a cozy daily ritual. Study alongside Mochi the cat, discover relaxing music, mix ambient sounds, and watch your room grow as you build your study habits.
 
-Requires Node.js 22.12+ (Node 24 recommended).
+The app runs entirely in your browser, with no backend or account required. Your study progress and preferences are saved on your device.
 
-```sh
-npm install
-cp .env.example .env
-npm run dev
-```
+## Key Features
 
-The focus timer, tracking, room progression, and ambience work immediately. For music, register your own application at https://devportal.jamendo.com/ and add its read API Client ID:
+- **Flexible focus timers:** Choose Pomodoro (25/5), Deep Focus (45/10), Long Study (60/10), a custom countdown, or a stopwatch. Pause, restart, and take breaks at your own pace.
+- **Six music stations:** Explore Tokyo Café, Rainy Window, Sakura Beats, Midnight Study, Library Neko, and Night Train. Each has its own icon, description, and Jamendo music search criteria; the rooms currently share a café illustration with color treatments.
+- **Independent music controls:** Play, pause, skip, shuffle, mute, and adjust music volume without interrupting your timer. View the current track, artist, and license information.
+- **Ambient sound mixer:** Choose original synthesized rain, café, fireplace, ocean, or night textures with a separate volume control. Ambience is selected independently of the music station.
+- **Mochi the study cat:** Your animated companion reacts to studying, breaks, session completion, and inactivity.
+- **Study tracking:** Track daily focus, total study time, completed sessions, daily goals, current and longest streaks, and recent daily history.
+- **Room progression:** Unlock seven cosmetic objects through study milestones, then choose which unlocked items to display.
+- **Kawaii light and dark modes:** Enjoy warm cream and strawberry accents by day, or deep plum and soft pink by night. Your theme preference is saved.
+- **Responsive design:** Flexible phone, tablet, and desktop layouts with touch-friendly controls, keyboard navigation, and reduced-motion support.
+- **Local persistence:** Keep progress and preferences between visits on the same browser. No cloud syncing or account setup is needed.
 
-```env
-VITE_JAMENDO_CLIENT_ID=your_client_id_here
-```
+## Tech Stack
 
-Restart Vite after editing `.env`. Vite exposes this ID in the browser bundle; it is not a secret. Never add a client secret or OAuth credentials. Creating a Jamendo account and accepting its terms are the project owner's responsibility.
+- **React:** Builds the interactive interface from reusable components. Custom hooks separate timer behavior, audio playback, and study tracking.
+- **TypeScript:** Adds type checking to components, state, and the music-provider interface. It helps catch errors during development and keeps the code easier to maintain.
+- **Vite:** Runs the local development server and produces the optimized production build. Its static output can be hosted on Vercel or GitHub Pages.
+- **Tailwind CSS:** Integrates with Vite for utility-based styling alongside custom CSS. The interface uses responsive layouts and theme styles for both light and dark modes.
+- **Lucide React:** Supplies consistent icons for navigation, timer actions, playback, and study statistics. Icon-only controls include accessible labels.
+- **Howler.js:** Handles music playback and locally hosted ambient audio. Separate audio instances let users control music and ambience independently.
+- **Jamendo API v3:** Provides track discovery and artist information for the six stations. A public Client ID enables read-only API access without a backend or client secret.
+- **localStorage:** Stores study history, preferences, goals, and room decoration selections in the browser. Data stays on the current device and browser rather than syncing to an account.
+- **Git and GitHub:** Git tracks source changes locally, and the project includes a GitHub Actions workflow for GitHub Pages deployment. The repository can also be connected to Vercel.
+- **Vitest and React Testing Library:** Test timer behavior and study-statistics calculations. Checks cover pause/resume, completion, breaks, stopwatch sessions, background timing, and streaks.
 
-## Features
+For local setup and deployment instructions, see [SETUP.md](SETUP.md). Music and asset attribution is documented in [CREDITS.md](CREDITS.md).
 
-- Pomodoro 25/5, deep focus 45/10, long study 60/10, custom 1–240 minutes, and count-up timer.
-- Pause, restart, explicit continue into breaks, and finish-session for stopwatch. Breaks do not count as focus. Changing mode/restarting preserves focus already earned but does not count an unfinished session as completed.
-- Wall-clock timer catches up after background tab throttling. Active sessions stop on reload; credited time is retained. Time accrued across midnight while a tab is suspended is attributed to the day it resumes.
-- Six Jamendo search-based stations with play/pause, next/previous, shuffle, mute, volume, automatic next, artist links, and license links. Music and timer operate independently. Station palettes share one original room illustration.
-- Five locally hosted original synthesized ambient textures with independent volume. These are stylized soundscapes, not field recordings; select the active sound again to turn it off.
-- Local daily focus, goal, completed sessions, total time, current/longest streak, and recent history. A day with at least one credited second extends a streak.
-- Animated Mochi and seven cosmetic milestones. Unlocked objects can be placed in the room.
-- Saved kawaii light/dark themes: cream and strawberry by day, deep plum and soft pink by night.
-- Keyboard-accessible controls, native modal focus trapping, touch-friendly phone/tablet layouts, and reduced-motion support.
+## View Mochi Focus Here
 
-Your browser's local storage is the source of truth. Different browsers/devices do not sync. Clearing site data deletes progress. A full/private storage environment can prevent persistence without stopping the timer. Use one active study tab to avoid competing writes.
+<!-- Add the live Vercel or GitHub Pages link here once hosting is selected. -->
 
-## Project architecture
+## Contact
 
-- `src/hooks/useTimer.ts`: wall-clock focus/break lifecycle.
-- `src/hooks/useStudyStats.ts`, `src/utils/stats.ts`: persistent study history and streak calculations.
-- `src/hooks/useMusic.ts`: Howler lifecycle, track navigation and playback.
-- `src/types/music.ts`: replaceable MusicProvider interface.
-- `src/services/jamendo.ts`: read API requests, validation, cancellation, and in-memory station cache.
-- `src/data/stations.ts`: station metadata and search criteria.
-- `src/components/`: mascot, ambience, modal.
-- `public/ambience/`, `public/backgrounds/`: local media.
-
-Music is fetched once per station per page session, then reused. No polling or timer-driven API requests. Network failures show a retry action. Live Jamendo playback requires your own valid Client ID and must be verified after configuration.
-
-## Checks
-
-```sh
-npm test
-npm run build
-npm run preview
-```
-
-## Deploy to Vercel
-
-Push this folder as a GitHub repository, import it into Vercel, and use the Vite preset. Build: `npm run build`. Output: `dist`. Add `VITE_JAMENDO_CLIENT_ID` in Vercel's environment settings and redeploy. No server or rewrite is needed.
-
-## Deploy to GitHub Pages
-
-The included Actions workflow builds and deploys to Pages on pushes to `main` or manual dispatch. In GitHub: Settings → Pages → Source → GitHub Actions. Add a repository Actions variable named `VITE_JAMENDO_CLIENT_ID`. Relative Vite asset paths support repository subpaths. Do not add `.env` to Git.
-
-```sh
-git remote add origin https://github.com/YOUR_USERNAME/mochi-focus.git
-git branch -M main
-git push -u origin main
-```
-
-## Audio and licensing
-
-See [CREDITS.md](CREDITS.md). Jamendo tracks retain their individual licenses. Check https://developer.jamendo.com/v3.0 and applicable API terms before release or monetization. Do not assume the open-source software license grants commercial rights to Jamendo music. API quotas and terms can change.
-
-Documentation references: [Tailwind Vite setup](https://tailwindcss.com/docs/installation/using-vite), [Jamendo tracks API](https://developer.jamendo.com/v3.0/tracks).
+- **LinkedIn:** [linkedin.com/in/cyristalj](https://www.linkedin.com/in/cyristalj)
+- **GitHub:** [github.com/cyristal-gems](https://github.com/cyristal-gems)
+- **Email:** [cyrisjoseph@outlook.com](mailto:cyrisjoseph@outlook.com)
