@@ -25,7 +25,6 @@ import {
   Armchair,
   CheckCircle2,
 } from "lucide-react";
-import { hasClientId } from "./services/jamendo";
 import { stations } from "./data/stations";
 import { useMusic } from "./hooks/useMusic";
 import { modes, useTimer } from "./hooks/useTimer";
@@ -161,13 +160,6 @@ export default function App() {
             <Flame size={16} />
             {stats.streak} day streak
           </span>
-          <button
-            className="icon-button"
-            aria-label="Settings"
-            onClick={openSettings}
-          >
-            <Settings2 size={20} />
-          </button>
         </div>
       </header>
       <main>
@@ -499,19 +491,6 @@ export default function App() {
                       account, no pressure.
                     </p>
                   </div>
-                  <h3>Music connection</h3>
-                  {hasClientId ? (
-                    <p>
-                      Jamendo is configured. Pick a station and press play to
-                      find your flow.
-                    </p>
-                  ) : (
-                    <p>
-                      Add your Jamendo Client ID in your project’s{" "}
-                      <code>.env</code> file, then restart the app. See the
-                      README for setup.
-                    </p>
-                  )}
                 </div>
               </div>
               <div className="mochi-companion">
