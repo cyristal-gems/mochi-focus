@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   BookOpen,
   Headphones,
@@ -34,6 +34,7 @@ import { modes, useTimer } from "./hooks/useTimer";
 import { useStudyStats } from "./hooks/useStudyStats";
 import { useStored } from "./utils/storage";
 import { duration } from "./utils/stats";
+import { prepareChime, playChime } from "./utils/chime";
 import Mascot from "./components/Mascot";
 import Modal from "./components/Modal";
 const unlocks = [
@@ -60,17 +61,27 @@ export default function App() {
   }, [theme]);
   const [stationId, setStationId] = useStored("mochi-current-station", "tokyo");
   const station = stations.find((s) => s.id === stationId) || stations[0];
+  const [chimeEnabled, setChimeEnabled] = useStored("mochi-chime", true);
   const music = useMusic(station),
     stats = useStudyStats(),
-    timer = useTimer(stats.record);
+    timer = useTimer(stats.record, () => {
+      if (chimeEnabled) void playChime();
+    });
   const [goal, setGoal] = useStored("mochi-daily-goal", 120),
     [decorations, setDecorations] = useStored<string[]>(
       "mochi-decorations",
       [],
     );
-  const [modal, setModal] = useState<
-      "stations" | "settings" | "history" | "room" | null
-    >(null),
+  const settingsRef = useRef<HTMLDetailsElement>(null);
+  function openSettings() {
+    if (!settingsRef.current) return;
+    settingsRef.current.open = true;
+    settingsRef.current.scrollIntoView({ block: "nearest" });
+    settingsRef.current.querySelector("summary")?.focus();
+  }
+  const [modal, setModal] = useState<"stations" | "history" | "room" | null>(
+      null,
+    ),
     [page, setPage] = useState("focus");
   const state = timer.celebrate
     ? "celebrating"
@@ -147,7 +158,7 @@ export default function App() {
           <button
             className="icon-button"
             aria-label="Settings"
-            onClick={() => setModal("settings")}
+            onClick={openSettings}
           >
             <Settings2 size={20} />
           </button>
@@ -177,8 +188,8 @@ export default function App() {
               aria-label={`${station.name} study room`}
             >
               <img
-                src={`${import.meta.env.BASE_URL}backgrounds/tokyo-cafe.png`}
-                alt="An illustrated sunlit Japanese café with plants, books, and a sleeping cat"
+                src={`${import.meta.env.BASE_URL}${station.artwork}`}
+                alt={station.artworkAlt}
               />
               <div className="scene-shade" />
               <span className="scene-label">
@@ -222,7 +233,10 @@ export default function App() {
                 <span className="eyebrow">
                   {music.playing ? "NOW PLAYING" : "LOFI FOR YOUR MIND"}
                 </span>
-                <h3>{music.track?.name || (music.loading ? "Loading station…" : "Music unavailable")}</h3>
+                <h3>
+                  {music.track?.name ||
+                    (music.loading ? "Loading station…" : "Music unavailable")}
+                </h3>
                 <p>
                   {music.track?.artist_name || station.name}
                   {music.track && (
@@ -408,7 +422,13 @@ export default function App() {
                   <span>Change station</span>
                   <ChevronDown size={13} />
                 </button>
-                <button className="primary-control" onClick={timer.toggle}>
+                <button
+                  className="primary-control"
+                  onClick={() => {
+                    if (chimeEnabled) void prepareChime();
+                    timer.toggle();
+                  }}
+                >
                   {timer.running ? <Pause size={17} /> : <Play size={17} />}
                   <span>
                     {timer.celebrate
@@ -424,6 +444,70 @@ export default function App() {
                   Finish session
                 </button>
               )}
+              <details className="timer-settings" ref={settingsRef}>
+                <summary>
+                  <Settings2 size={15} /> Timer settings
+                </summary>
+                <div className="settings-content">
+                  <p className="modal-description">
+                    Little adjustments for your kind of day.
+                  </p>
+                  <label>
+                    Daily focus goal <span>{goal} minutes</span>
+                    <input
+                      type="range"
+                      min="15"
+                      max="480"
+                      step="15"
+                      value={goal}
+                      onChange={(e) => setGoal(+e.target.value)}
+                    />
+                  </label>
+                  <div className="chime-settings">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={chimeEnabled}
+                        onChange={(e) => {
+                          setChimeEnabled(e.target.checked);
+                          if (e.target.checked) void prepareChime();
+                        }}
+                      />{" "}
+                      Completion chime
+                    </label>
+                    <button
+                      className="text-button"
+                      onClick={() => void playChime()}
+                    >
+                      Preview chime
+                    </button>
+                    <p>
+                      Plays when focus or break time ends, or you finish a
+                      stopwatch session.
+                    </p>
+                  </div>
+                  <div className="settings-note">
+                    <Leaf size={24} />
+                    <p>
+                      Your study history and preferences stay on this device. No
+                      account, no pressure.
+                    </p>
+                  </div>
+                  <h3>Music connection</h3>
+                  {hasClientId ? (
+                    <p>
+                      Jamendo is configured. Pick a station and press play to
+                      find your flow.
+                    </p>
+                  ) : (
+                    <p>
+                      Add your Jamendo Client ID in your project’s{" "}
+                      <code>.env</code> file, then restart the app. See the
+                      README for setup.
+                    </p>
+                  )}
+                </div>
+              </details>
               <div className="mochi-companion">
                 <Mascot state={state} />
                 <div>
@@ -462,10 +546,7 @@ export default function App() {
                 {duration(stats.today)}
                 <small> / {duration(goal * 60)}</small>
               </span>
-              <button
-                className="text-button"
-                onClick={() => setModal("settings")}
-              >
+              <button className="text-button" onClick={openSettings}>
                 Daily goal
               </button>
             </div>
@@ -561,11 +642,9 @@ export default function App() {
           title={
             modal === "stations"
               ? "Find your frequency"
-              : modal === "settings"
-                ? "Make it your own"
-                : modal === "history"
-                  ? "Your focus journey"
-                  : "A room that grows with you"
+              : modal === "history"
+                ? "Your focus journey"
+                : "A room that grows with you"
           }
           close={() => {
             setModal(null);
@@ -587,12 +666,12 @@ export default function App() {
                       setModal(null);
                     }}
                   >
-                    <span
+                    <img
                       className="station-art"
-                      style={{ background: s.color }}
-                    >
-                      {s.icon}
-                    </span>
+                      src={`${import.meta.env.BASE_URL}${s.artwork}`}
+                      alt=""
+                      loading="lazy"
+                    />
                     <strong>
                       {s.name}
                       {station.id === s.id && <Check size={16} />}
@@ -602,43 +681,6 @@ export default function App() {
                 ))}
               </div>
             </>
-          )}
-          {modal === "settings" && (
-            <div className="settings-content">
-              <p className="modal-description">
-                Little adjustments for your kind of day.
-              </p>
-              <label>
-                Daily focus goal <span>{goal} minutes</span>
-                <input
-                  type="range"
-                  min="15"
-                  max="480"
-                  step="15"
-                  value={goal}
-                  onChange={(e) => setGoal(+e.target.value)}
-                />
-              </label>
-              <div className="settings-note">
-                <Leaf size={24} />
-                <p>
-                  Your study history and preferences stay on this device. No
-                  account, no pressure.
-                </p>
-              </div>
-              <h3>Music connection</h3>
-              {hasClientId ? (
-                <p>
-                  Jamendo is configured. Pick a station and press play to find
-                  your flow.
-                </p>
-              ) : (
-                <p>
-                  Add your Jamendo Client ID in your project’s <code>.env</code>{" "}
-                  file, then restart the app. See the README for setup.
-                </p>
-              )}
-            </div>
           )}
           {modal === "history" && (
             <>
@@ -650,7 +692,10 @@ export default function App() {
                   <strong>{duration(stats.total)}</strong>Total focus
                 </div>
                 <div>
-                  <strong>{stats.longest} {stats.longest === 1 ? "day" : "days"}</strong>Longest streak
+                  <strong>
+                    {stats.longest} {stats.longest === 1 ? "day" : "days"}
+                  </strong>
+                  Longest streak
                 </div>
                 <div>
                   <strong>{stats.sessions}</strong>Sessions

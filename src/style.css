@@ -2055,3 +2055,50 @@ footer {
   height: 100%;
   overflow: visible;
 }
+
+.chime-settings {
+  margin: 20px 0;
+}
+.chime-settings label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chime-settings label input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: #cc487a;
+}
+.chime-settings p {
+  font-size: 12px;
+  line-height: 1.6;
+}
+.room-scene > img {
+  filter: none;
+}
+
+.station-art {
+  width: 100%;
+  object-fit: cover;
+}
+[data-theme="dark"] .room-scene > img {
+  filter: brightness(0.9);
+}
+
+.timer-settings {
+  border-top: 1px solid #b889a533;
+  margin-top: 14px;
+  padding-top: 12px;
+}
+.timer-settings summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 6px 0;
+}
+.timer-settings .settings-content {
+  padding: 8px 0;
+}

@@ -13,6 +13,8 @@ export interface Station {
   icon: string;
   description: string;
   trackIds: string[];
+  artwork: string;
+  artworkAlt: string;
   color: string;
 }
 export interface MusicProvider {

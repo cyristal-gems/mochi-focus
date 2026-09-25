@@ -9,8 +9,9 @@ The app runs entirely in your browser, with no backend or account required. Your
 ## Key Features
 
 - **Flexible focus timers:** Choose Pomodoro (25/5), Deep Focus (45/10), Long Study (60/10), a custom countdown, or a stopwatch. Pause, restart, and take breaks at your own pace.
-- **Six music stations:** Explore Tokyo Café, Rainy Window, Sakura Beats, Midnight Study, Library Neko, and Night Train. Each has its own icon, description, and nine selected Jamendo tracks explicitly labeled lofi; the rooms currently share a café illustration with color treatments.
+- **Six music stations:** Explore Tokyo Café, Rainy Window, Sakura Beats, Midnight Study, Library Neko, and Night Train. Each has its own icon, description, and nine selected Jamendo tracks explicitly labeled lofi; each room has original artwork featuring Mochi and cherry blossoms.
 - **Independent music controls:** Play, pause, skip, shuffle, mute, and adjust music volume without interrupting your timer. View the current track, artist, and license information.
+- **Completion chime:** An optional gentle tone marks the end of focus and break timers or a finished stopwatch session. Preview it in Settings and save your preference.
 - **Mochi the study cat:** Your tuxedo cat companion wears a cherry blossom and reacts to studying, breaks, session completion, and inactivity.
 - **Study tracking:** Track daily focus, total study time, completed sessions, daily goals, current and longest streaks, and recent daily history.
 - **Room progression:** Unlock seven cosmetic objects through study milestones, then choose which unlocked items to display.

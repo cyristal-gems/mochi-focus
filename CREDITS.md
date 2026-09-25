@@ -6,7 +6,11 @@ Music is streamed from Jamendo API v3 at runtime, not bundled. Each current trac
 
 ## Artwork
 
-`public/backgrounds/tokyo-cafe.png`: original AI-generated illustration created for Mochi Focus with OpenAI image generation, September 2026. Six station color treatments share this illustration. The animated SVG tuxedo cat and cherry blossom mascot is original project code.
+`public/backgrounds/{tokyo,rain,sakura,midnight,library,train}.png`: six original AI-generated illustrations created for Mochi Focus using the built-in OpenAI image-generation tool, September 2026. Each scene features a tuxedo cat and cherry blossoms. Prompts are recorded in [ARTWORK.md](ARTWORK.md). The animated SVG tuxedo cat and cherry blossom mascot is original project code.
+
+## Completion chime
+
+An original three-note sine-wave notification tone is synthesized by the browser Web Audio API. It uses no external recording, music sample, or AI-generated audio.
 
 ## Libraries
 

@@ -9,6 +9,7 @@ export const modes = [
 ];
 export function useTimer(
   record: (seconds: number, completed: boolean) => void,
+  onComplete?: () => void,
 ) {
   const [mode, setMode] = useStored("mochi-timer-mode", "pomodoro"),
     [custom, setCustom] = useStored("mochi-custom-minutes", 30),
@@ -21,6 +22,8 @@ export function useTimer(
     elapsedRef = useRef(0),
     completedRef = useRef(false),
     recordRef = useRef(record);
+  const completeRef = useRef(onComplete);
+  completeRef.current = onComplete;
   recordRef.current = record;
   const preset = modes.find((m) => m.id === mode) || modes[0];
   const limit =
@@ -46,6 +49,7 @@ export function useTimer(
       completedRef.current = true;
       setRunning(false);
       setCelebrate(true);
+      completeRef.current?.();
     }
   }
   useEffect(() => {
@@ -85,8 +89,10 @@ export function useTimer(
   }
   function finish() {
     if (running) tick();
-    if (mode === "stopwatch" && elapsedRef.current > 0)
+    if (mode === "stopwatch" && elapsedRef.current > 0) {
       recordRef.current(0, true);
+      completeRef.current?.();
+    }
     reset();
   }
   return {

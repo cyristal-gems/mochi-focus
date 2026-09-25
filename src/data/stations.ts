@@ -2,6 +2,9 @@ import type { Station } from "../types/music";
 export const stations: Station[] = [
   {
     id: "tokyo",
+    artwork: "backgrounds/tokyo.png",
+    artworkAlt:
+      "Mochi the tuxedo cat in a warm Tokyo coffeehouse with cherry blossoms",
     name: "Tokyo Café",
     icon: "☕",
     description: "Coffeehouse & jazz lofi",
@@ -20,6 +23,9 @@ export const stations: Station[] = [
   },
   {
     id: "rain",
+    artwork: "backgrounds/rain.png",
+    artworkAlt:
+      "Mochi curled up beside a rainy city window and cherry blossoms",
     name: "Rainy Window",
     icon: "🌧️",
     description: "Dreamy, mellow lofi",
@@ -38,6 +44,9 @@ export const stations: Station[] = [
   },
   {
     id: "sakura",
+    artwork: "backgrounds/sakura.png",
+    artworkAlt:
+      "Mochi resting on a veranda overlooking a cherry blossom garden",
     name: "Sakura Beats",
     icon: "🌸",
     description: "Asian-inspired & springtime lofi",
@@ -56,6 +65,8 @@ export const stations: Station[] = [
   },
   {
     id: "midnight",
+    artwork: "backgrounds/midnight.png",
+    artworkAlt: "Mochi in a moonlit attic study with a warm desk lamp",
     name: "Midnight Study",
     icon: "🌙",
     description: "Sleepy & late-night lofi",
@@ -74,6 +85,8 @@ export const stations: Station[] = [
   },
   {
     id: "library",
+    artwork: "backgrounds/library.png",
+    artworkAlt: "Mochi among library bookshelves and cherry blossom details",
     name: "Library Neko",
     icon: "📚",
     description: "Piano & calm study lofi",
@@ -92,6 +105,9 @@ export const stations: Station[] = [
   },
   {
     id: "train",
+    artwork: "backgrounds/train.png",
+    artworkAlt:
+      "Mochi in a vintage night train carriage overlooking city lights",
     name: "Night Train",
     icon: "🚃",
     description: "Wandering & nostalgic lofi",

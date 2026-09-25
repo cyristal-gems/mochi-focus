@@ -75,3 +75,24 @@ describe("focus timer", () => {
     expect(record.mock.calls.reduce((n, [s]) => n + s, 0)).toBe(600);
   });
 });
+
+it("notifies once per completed focus, break, and stopwatch session", () => {
+  const completed = vi.fn();
+  const { result } = renderHook(() => useTimer(vi.fn(), completed));
+  act(() => result.current.select("custom"));
+  act(() => result.current.setCustom(1));
+  act(() => result.current.toggle());
+  act(() => vi.advanceTimersByTime(65000));
+  expect(completed).toHaveBeenCalledTimes(1);
+  act(() => result.current.toggle());
+  act(() => vi.advanceTimersByTime(305000));
+  expect(completed).toHaveBeenCalledTimes(2);
+  act(() => result.current.select("stopwatch"));
+  act(() => result.current.toggle());
+  act(() => vi.advanceTimersByTime(2000));
+  act(() => result.current.finish());
+  expect(completed).toHaveBeenCalledTimes(3);
+  act(() => result.current.reset());
+  act(() => result.current.finish());
+  expect(completed).toHaveBeenCalledTimes(3);
+});
