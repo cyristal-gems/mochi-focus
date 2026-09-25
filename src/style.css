@@ -1084,7 +1084,7 @@ dialog::backdrop {
     display: none;
   }
 }
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .topbar {
     height: 82px;
   }
@@ -1411,7 +1411,7 @@ dialog::backdrop {
   background: #51455b;
   color: #f1d6ad;
 }
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .header-right {
     gap: 5px;
   }
@@ -1704,7 +1704,7 @@ footer {
 [data-theme="dark"] .footer-flower {
   color: #f68fba;
 }
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .brand-cat {
     font-size: 12px;
     padding: 11px 6px;
@@ -1726,7 +1726,7 @@ footer {
   }
 }
 /* Touch-first layouts, including narrow phones and landscape tablets. */
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .topbar {
     height: auto;
     min-height: 110px;
@@ -1852,5 +1852,16 @@ footer {
   }
   .room-unlock p {
     line-height: 1.6;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1100px) {
+  .music-panel {
+    flex-wrap: wrap;
+  }
+  .music-volume {
+    display: flex;
+    width: 120px;
+    margin-left: auto;
   }
 }

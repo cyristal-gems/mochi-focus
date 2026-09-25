@@ -29,7 +29,8 @@ Restart Vite after editing `.env`. Vite exposes this ID in the browser bundle; i
 - Five locally hosted original synthesized ambient textures with independent volume. These are stylized soundscapes, not field recordings; select the active sound again to turn it off.
 - Local daily focus, goal, completed sessions, total time, current/longest streak, and recent history. A day with at least one credited second extends a streak.
 - Animated Mochi and seven cosmetic milestones. Unlocked objects can be placed in the room.
-- Keyboard-accessible controls, native modal focus trapping, responsive mobile layout, and reduced-motion support.
+- Saved kawaii light/dark themes: cream and strawberry by day, deep plum and soft pink by night.
+- Keyboard-accessible controls, native modal focus trapping, touch-friendly phone/tablet layouts, and reduced-motion support.
 
 Your browser's local storage is the source of truth. Different browsers/devices do not sync. Clearing site data deletes progress. A full/private storage environment can prevent persistence without stopping the timer. Use one active study tab to avoid competing writes.
 
