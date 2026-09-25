@@ -72,3 +72,11 @@ git push -u origin main
 See [CREDITS.md](CREDITS.md). Jamendo tracks retain their individual licenses. Check https://developer.jamendo.com/v3.0 and applicable API terms before release or monetization. Do not assume the open-source software license grants commercial rights to Jamendo music. API quotas and terms can change.
 
 Documentation references: [Tailwind Vite setup](https://tailwindcss.com/docs/installation/using-vite), [Jamendo tracks API](https://developer.jamendo.com/v3.0/tracks).
+
+## Offline availability
+
+Production builds include a service worker that precaches the app, artwork, and all five local ambient files (about 6 MB). Open the app online and wait for “Your cozy corner is ready offline” before disconnecting. Use the same browser and URL to reopen it. Jamendo API responses and streamed tracks are never cached by the app.
+
+HTTPS is required on hosted sites; localhost also works. Vercel and GitHub Pages support HTTPS. Offline caching is disabled in the development server to avoid stale development files. To try locally: `npm run build`, then `npm run preview`, and open its URL.
+
+Updates install in the background and activate after existing app tabs close, preserving active study sessions. Browser storage clearing or eviction removes offline assets and may remove saved study data; visit online again to prepare offline use. Browser support for home-screen installation varies.

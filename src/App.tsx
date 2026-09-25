@@ -36,6 +36,7 @@ import { useStored } from "./utils/storage";
 import { duration } from "./utils/stats";
 import AmbientMixer from "./components/AmbientMixer";
 import Mascot from "./components/Mascot";
+import OfflineStatus from "./components/OfflineStatus";
 import Modal from "./components/Modal";
 const unlocks = [
   { hours: 1, name: "Little plant", icon: "🌱" },
@@ -155,6 +156,7 @@ export default function App() {
         </div>
       </header>
       <main>
+        <OfflineStatus />
         <div className="welcome">
           <div>
             <div className="eyebrow">
