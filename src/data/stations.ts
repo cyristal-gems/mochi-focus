@@ -1,0 +1,51 @@
+import type { Station } from "../types/music";
+export const stations: Station[] = [
+  {
+    id: "tokyo",
+    name: "Tokyo Café",
+    icon: "☕",
+    description: "Warm beats & coffee breaks",
+    tags: "jazz+chillout",
+    color: "#d9c2a0",
+  },
+  {
+    id: "rain",
+    name: "Rainy Window",
+    icon: "🌧️",
+    description: "A soft soundtrack for rainy days",
+    tags: "ambient+chillout",
+    color: "#aebdc0",
+  },
+  {
+    id: "sakura",
+    name: "Sakura Beats",
+    icon: "🌸",
+    description: "A little pink, a little dreamy",
+    tags: "chillout+instrumental",
+    color: "#e1b9bd",
+  },
+  {
+    id: "midnight",
+    name: "Midnight Study",
+    icon: "🌙",
+    description: "For your quiet, late-night thoughts",
+    tags: "ambient+electronic",
+    color: "#a9a9c5",
+  },
+  {
+    id: "library",
+    name: "Library Neko",
+    icon: "📚",
+    description: "Turn a page. Find your flow.",
+    tags: "piano+instrumental",
+    color: "#adb897",
+  },
+  {
+    id: "train",
+    name: "Night Train",
+    icon: "🚃",
+    description: "Slow journeys, wandering minds",
+    tags: "downtempo",
+    color: "#a7b3ba",
+  },
+];
