@@ -23,7 +23,6 @@ Mochi Focus is a kawaii lofi study timer that turns focus time into a cozy daily
 - **Howler.js:** Handles Jamendo music playback, track navigation, and volume control independently of the focus timer.
 - **Jamendo API v3:** Provides track discovery and artist information for the six stations. A public Client ID enables read-only API access without a backend or client secret.
 - **localStorage:** Stores study history, preferences, goals, and room decoration selections in the browser. Data stays on the current device and browser rather than syncing to an account.
-- **Git and GitHub:** Git tracks source changes locally, and the project includes a GitHub Actions workflow for GitHub Pages deployment. The repository can also be connected to Vercel.
 - **Vitest and React Testing Library:** Test timer behavior and study-statistics calculations. Checks cover pause/resume, completion, breaks, stopwatch sessions, background timing, and streaks.
 
 ## 🌸 View Mochi Focus Here
