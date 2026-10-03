@@ -72,10 +72,7 @@ export default function App() {
       if (chimeEnabled) void playChime();
     });
   const [goal, setGoal] = useStored("mochi-daily-goal", 120),
-    [decorations] = useStored<string[]>(
-      "mochi-decorations",
-      [],
-    );
+    [decorations] = useStored<string[]>("mochi-decorations", []);
   const settingsRef = useRef<HTMLDivElement>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   function openSettings() {
@@ -340,7 +337,6 @@ export default function App() {
                     {m.name}
                   </button>
                 ))}
-
               </div>
               {timer.mode === "custom" && (
                 <label className="custom-duration">
@@ -582,9 +578,16 @@ export default function App() {
           <span className="plant-icon">🧩</span>
           <div>
             <h3>Your cozy puzzle break.</h3>
-            <p>Six little rooms to piece together. Pick a picture and make yourself at home.</p>
+            <p>
+              Eight cozy pictures to unlock with study time and piece together.
+            </p>
           </div>
-          <button onClick={() => { setModal("room"); setPage("room"); }}>
+          <button
+            onClick={() => {
+              setModal("room");
+              setPage("room");
+            }}
+          >
             Explore room puzzles <ArrowUpRight size={16} />
           </button>
         </section>
@@ -607,7 +610,7 @@ export default function App() {
               ? "Find your frequency"
               : modal === "history"
                 ? "Your focus journey"
-                : "Six little room puzzles"
+                : "Eight little scene puzzles"
           }
           close={() => {
             setModal(null);
@@ -691,9 +694,7 @@ export default function App() {
               )}
             </>
           )}
-          {modal === "room" && (
-            <RoomBuilder />
-          )}
+          {modal === "room" && <RoomBuilder total={stats.total} />}
         </Modal>
       )}
     </div>
