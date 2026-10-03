@@ -72,7 +72,7 @@ export default function App() {
       if (chimeEnabled) void playChime();
     });
   const [goal, setGoal] = useStored("mochi-daily-goal", 120),
-    [decorations, setDecorations] = useStored<string[]>(
+    [decorations] = useStored<string[]>(
       "mochi-decorations",
       [],
     );
@@ -95,7 +95,6 @@ export default function App() {
       : timer.running
         ? "studying"
         : "idle";
-  const nextUnlock = unlocks.find((u) => stats.total < u.hours * 3600);
   const time = `${String(Math.floor(timer.seconds / 60)).padStart(2, "0")}:${String(timer.seconds % 60).padStart(2, "0")}`;
   useEffect(() => {
     document.title = timer.running
@@ -580,35 +579,13 @@ export default function App() {
           </section>
         </div>
         <section className="room-unlock">
-          <span className="plant-icon">🌱</span>
+          <span className="plant-icon">🧩</span>
           <div>
-            <h3>A little focus makes your room grow.</h3>
-            <p>
-              {nextUnlock
-                ? `Your next little joy: ${nextUnlock.name.toLowerCase()} · unlocks at ${duration(nextUnlock.hours * 3600)} of focus`
-                : "Your cozy collection is complete. Keep growing."}
-            </p>
+            <h3>Your cozy puzzle break.</h3>
+            <p>Six little rooms to piece together. Pick a picture and make yourself at home.</p>
           </div>
-          <div className="unlock-progress">
-            <span>
-              {duration(stats.total)} /{" "}
-              {nextUnlock ? duration(nextUnlock.hours * 3600) : "Complete"}
-            </span>
-            <div className="progress-track">
-              <div
-                style={{
-                  width: `${nextUnlock ? Math.min(100, (stats.total / (nextUnlock.hours * 3600)) * 100) : 100}%`,
-                }}
-              />
-            </div>
-          </div>
-          <button
-            onClick={() => {
-              setModal("room");
-              setPage("room");
-            }}
-          >
-            Explore my room <ArrowUpRight size={16} />
+          <button onClick={() => { setModal("room"); setPage("room"); }}>
+            Explore room puzzles <ArrowUpRight size={16} />
           </button>
         </section>
         <footer>
@@ -630,7 +607,7 @@ export default function App() {
               ? "Find your frequency"
               : modal === "history"
                 ? "Your focus journey"
-                : "A room that grows with you"
+                : "Six little room puzzles"
           }
           close={() => {
             setModal(null);
@@ -715,12 +692,7 @@ export default function App() {
             </>
           )}
           {modal === "room" && (
-            <RoomBuilder
-              items={unlocks}
-              total={stats.total}
-              placed={decorations}
-              setPlaced={setDecorations}
-            />
+            <RoomBuilder />
           )}
         </Modal>
       )}
